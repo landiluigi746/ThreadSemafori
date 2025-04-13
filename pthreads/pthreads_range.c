@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdint.h>
 #include <pthread.h>
 
 #define NUM_THREADS 8
@@ -9,7 +10,7 @@ typedef struct
 {
     int start;
     int end;
-    long sum;
+    int64_t sum;
 } RangeData;
 
 void* ThreadFunc(void* arg);
@@ -44,7 +45,7 @@ int main(void)
     {
         if(pthread_join(threads[i], NULL) != 0)
         {
-            printf("There was an error creating a thread!\n");
+            printf("There was an error joining a thread!\n");
             return 1;
         }
     }
@@ -54,7 +55,7 @@ int main(void)
     printf("Elapsed time: %.2lf milliseconds\n", ((double) end - start) / (CLOCKS_PER_SEC / 1000));
 
     for(i = 0; i < NUM_THREADS; ++i)
-        printf("Thread %d calculated sum between %d and %d: %ld\n", i, rangesData[i].start, rangesData[i].end, rangesData[i].sum);
+        printf("Thread %d calculated sum between %d and %d: %lld\n", i, rangesData[i].start, rangesData[i].end, rangesData[i].sum);
 
     return 0;
 }

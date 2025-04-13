@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
-#include <omp.h>
+#include <windows.h>
 
 #define NUM_THREADS 8
 #define RANGE_SIZE 100000
@@ -13,12 +13,13 @@ typedef struct
     int64_t sum;
 } RangeData;
 
-void ThreadFunc(RangeData* rangeData);
+DWORD WINAPI ThreadFunc(LPVOID arg);
 
 int main(void)
 {
     int i;
     clock_t start, end;
+    HANDLE threads[NUM_THREADS];
     RangeData rangesData[NUM_THREADS];
 
     for(i = 0; i < NUM_THREADS; ++i)
@@ -31,9 +32,26 @@ int main(void)
 
     start = clock();
 
-    #pragma omp parallel num_threads(NUM_THREADS)
+    for(i = 0; i < NUM_THREADS; ++i)
     {
-        ThreadFunc(&rangesData[omp_get_thread_num()]);
+        threads[i] = CreateThread(NULL, 0, &ThreadFunc, &rangesData[i], 0, NULL);
+
+        if(threads[i] == NULL)
+        {
+            printf("There was an error creating a thread!\n");
+            return 1;
+        }
+    }
+
+    WaitForMultipleObjects(NUM_THREADS, threads, TRUE, INFINITE);
+
+    for(i = 0; i < NUM_THREADS; ++i)
+    {
+        if(CloseHandle(threads[i]) == 0)
+        {
+            printf("There was an error joining a thread\n");
+            return 1;
+        }
     }
 
     end = clock();
@@ -46,12 +64,15 @@ int main(void)
     return 0;
 }
 
-void ThreadFunc(RangeData* rangeData)
+DWORD WINAPI ThreadFunc(LPVOID arg)
 {
+    RangeData* rangeData = (RangeData*) arg;
     int i;
 
     rangeData->sum = 0;
 
     for(i = rangeData->start; i <= rangeData->end; ++i)
         rangeData->sum += i;
+
+    return 0;
 }

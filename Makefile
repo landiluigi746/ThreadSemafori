@@ -12,3 +12,6 @@ stdthreads_range: stdthreads/stdthreads_range.c
 
 openmp_range: openmp/openmp_range.c
 	$(CC) $< -o openmp/$@ -fopenmp
+
+winthreads_range: winthreads/winthreads_range.c
+	$(CC) $< -o winthreads/$@
