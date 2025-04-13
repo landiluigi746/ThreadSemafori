@@ -32,10 +32,22 @@ int main(void)
     start = clock();
 
     for(i = 0; i < NUM_THREADS; ++i)
-        thrd_create(&threads[i], &ThreadFunc, &rangesData[i]);
+    {
+        if(thrd_create(&threads[i], &ThreadFunc, &rangesData[i]) != thrd_success)
+        {
+            printf("There was an error creating a thread!\n");
+            return 1;
+        }
+    }
 
     for(i = 0; i < NUM_THREADS; ++i)
-        thrd_join(threads[i], NULL);
+    {
+        if(thrd_join(threads[i], NULL) != thrd_success)
+        {
+            printf("There was an error joining a thread\n");
+            return 1;
+        }
+    }
 
     end = clock();
 

@@ -32,10 +32,22 @@ int main(void)
     start = clock();
 
     for(i = 0; i < NUM_THREADS; ++i)
-        pthread_create(&threads[i], NULL, &ThreadFunc, &rangesData[i]);
+    {
+        if(pthread_create(&threads[i], NULL, &ThreadFunc, &rangesData[i]) != 0)
+        {
+            printf("There was an error creating a thread!\n");
+            return 1;
+        }
+    }
 
     for(i = 0; i < NUM_THREADS; ++i)
-        pthread_join(threads[i], NULL);
+    {
+        if(pthread_join(threads[i], NULL) != 0)
+        {
+            printf("There was an error creating a thread!\n");
+            return 1;
+        }
+    }
 
     end = clock();
 
