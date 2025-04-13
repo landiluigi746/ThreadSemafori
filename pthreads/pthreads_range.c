@@ -1,3 +1,7 @@
+/**
+ * Online version: https://godbolt.org/z/87YEnbMM4
+ */
+
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
