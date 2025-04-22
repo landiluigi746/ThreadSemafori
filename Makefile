@@ -17,6 +17,9 @@ openmp_range: openmp/openmp_range.c
 winthreads_range: winthreads/winthreads_range.c
 	$(CC) $< -o winthreads/$@
 
+openmp_shared_var_nosync: openmp/openmp_shared_var_nosync.c
+	$(CC) $< -o openmp/$@ -fopenmp
+
 pthreads_shared_var: pthreads/pthreads_shared_var.c
 	$(CC) $< -o pthreads/$@ -lpthread
 
