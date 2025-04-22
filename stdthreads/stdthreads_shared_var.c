@@ -60,6 +60,7 @@ int ThreadFunc(void* arg)
     for(i = 0; i < INCREMENTS; i++)
     {
         // entriamo nella sezione critica: facciamo lock sul mutex
+        // ora solo un thread lavora su counter
         mtx_lock(&mutex);
         counter++;
         // usciamo dalla sezione critica: facciamo unlock sul mutex
