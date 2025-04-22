@@ -9,6 +9,8 @@
 #define INCREMENTS 10000
 
 int counter = 0;
+
+// creiamo un mutex globale e lo inizializziamo
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void* ThreadFunc(void* arg);
@@ -47,8 +49,11 @@ void* ThreadFunc(void* arg)
 
     for(i = 0; i < INCREMENTS; i++)
     {
+        // entriamo nella sezione critica: facciamo lock sul mutex
+        // ora solo un thread lavora su counter
         pthread_mutex_lock(&mutex);
         counter++;
+        // usciamo dalla sezione critica: facciamo unlock sul mutex
         pthread_mutex_unlock(&mutex);
     }
 

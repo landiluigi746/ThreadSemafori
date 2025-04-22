@@ -9,6 +9,8 @@
 #define INCREMENTS 10000
 
 int counter = 0;
+
+// dichiariamo il mutex globale
 mtx_t mutex;
 
 int ThreadFunc(void* arg);
@@ -18,6 +20,7 @@ int main(void)
     int i;
     thrd_t threads[NUM_THREADS];
 
+    // inizializziamo il mutex
     if(mtx_init(&mutex, mtx_plain) != thrd_success)
     {
         printf("Error initializing mutex");
@@ -42,6 +45,7 @@ int main(void)
         }
     }
 
+    // distruggiamo il mutex
     mtx_destroy(&mutex);
 
     printf("Final value of shared var: %d\n", counter);
@@ -55,8 +59,10 @@ int ThreadFunc(void* arg)
 
     for(i = 0; i < INCREMENTS; i++)
     {
+        // entriamo nella sezione critica: facciamo lock sul mutex
         mtx_lock(&mutex);
         counter++;
+        // usciamo dalla sezione critica: facciamo unlock sul mutex
         mtx_unlock(&mutex);
     }
 

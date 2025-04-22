@@ -9,6 +9,8 @@
 #define INCREMENTS 10000
 
 int counter = 0;
+
+// dichiaramo un oggetto di sezione critica (mutex)
 CRITICAL_SECTION critSection;
 
 DWORD WINAPI ThreadFunc(LPVOID arg);
@@ -18,6 +20,7 @@ int main(void)
     int i;
     HANDLE threads[NUM_THREADS];
 
+    // inizializziamo la sezione critica
     InitializeCriticalSection(&critSection);
 
     for(i = 0; i < NUM_THREADS; ++i)
@@ -42,6 +45,7 @@ int main(void)
         }
     }
 
+    // distruggiamo la sezione critica
     DeleteCriticalSection(&critSection);
 
     printf("Final value of shared var: %d\n", counter);
@@ -55,8 +59,11 @@ DWORD WINAPI ThreadFunc(LPVOID arg)
 
     for(i = 0; i < INCREMENTS; i++)
     {
+        // entriamo nella sezione critica: facciamo lock sul mutex
+        // ora solo un thread lavora su counter
         EnterCriticalSection(&critSection);
         counter++;
+        // usciamo dalla sezione critica: facciamo unlock sul mutex
         LeaveCriticalSection(&critSection);
     }
 

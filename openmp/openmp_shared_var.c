@@ -12,14 +12,19 @@ int counter = 0;
 
 int main(void)
 {
+    // Utilizziamo la direttiva del preprocessore pragma per dire al compilatore di invocare openmp e
+    // che questa sezione di codice deve essere eseguita in parallelo con un numero di threads pari a NUM_THREADS
     #pragma omp parallel num_threads(NUM_THREADS)
     {
         int i;
 
         for(i = 0; i < INCREMENTS; i++)
         {
+            // Qui diciamo che siamo in una sezione critica
+            // OpenMP si occuperà di gestirla
             #pragma omp critical
             {
+                // ora solo un thread lavora su counter
                 counter++;
             }
         }
