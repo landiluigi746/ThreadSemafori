@@ -1,5 +1,5 @@
 /**
- * Online version: https://godbolt.org/z/P7jMjqPh5
+ * Online version: https://godbolt.org/z/xra44E9vb
  */
 
 #include <stdio.h>
@@ -14,12 +14,14 @@ int main(void)
 {
     #pragma omp parallel num_threads(NUM_THREADS)
     {
-        #pragma omp critical
-        {
-            int i;
+        int i;
 
-            for(i = 0; i < INCREMENTS; i++)
+        for(i = 0; i < INCREMENTS; i++)
+        {
+            #pragma omp critical
+            {
                 counter++;
+            }
         }
     }
 
