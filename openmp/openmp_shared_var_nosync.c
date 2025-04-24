@@ -1,5 +1,5 @@
 /**
- * Online version: https://godbolt.org/z/x5Khrdex8
+ * Online version: https://godbolt.org/z/Wx8xTrzW4
  */
 
 #include <stdio.h>
@@ -16,12 +16,8 @@ int main(void)
     {
         int i;
 
-        for(i = 0; i < INCREMENTS; i++)
-        {
-            #pragma omp critical
-            {
-                counter++;
-            }
+        for(i = 0; i < INCREMENTS; i++) {
+            counter++;
         }
     }
 
