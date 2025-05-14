@@ -58,18 +58,20 @@ make winthreads_range
 make winthreads_shared_var
 ```
 
-Gli esempi vengono compilati nella cartella bin.
+Gli esempi vengono compilati nella cartella del loro "metodo" di realizzazione dei thread, per esempio:
+- openmp/opemp_range (.exe se compiliamo su windows)
+- stdthreads/stdthreads_shared_var (.exe se compiliamo su windows)
 
 Esecuzione:
 
 - Linux:
 ```bash
-./bin/<esempio>
+./<metodo>/<esempio>
 ```
 
 - Windows:
 ```cmd
-.\bin\<esempio>
+.\<metodo>\<esempio>
 ```
 
 ## Conclusioni
