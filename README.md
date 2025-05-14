@@ -50,7 +50,7 @@ Le regole definite sono del tipo <metodo>_<esempio>, per esempio:
 - winthreads_shared_var
 - pthreads_shared_var
 
-Di default verranno compilati tutti gli esempi tranne quelli che utilizzano i thread di windows (scelta fatta al fine di garantire compatibilità con Linux).
+Di default vengono compilati tutti gli esempi tranne quelli che utilizzano i thread di windows (scelta fatta al fine di garantire compatibilità con Linux).
 
 Per compilare gli esempi che utilizzano l'API di Windows "invocare" il Makefile utilizzando le regole che compilano gli esempi per windows.
 ```bash
@@ -76,6 +76,6 @@ Esecuzione:
 
 Analizzando il codice possiamo notare come il metodo più semplice di realizzare la programmazione multithreading in C è OpenMP, in quanto con poche linee di codice possiamo gestire i thread e la loro sincronizzazione. Dobbiamo però ricordare che non tutti i compilatori implementano OpenMP.
 
-Tra i meotodi più "classici" (pthreads, c11 threads e win32 threads) quello più semplice da utilizzare e che garantisce più compatibilità è la libreria standard per i thread di C11. Anche questa però non è implementata in tutti i compilatori in quanto è una funzionalità standard opzionale.
+Tra i metodi più "classici" (pthreads, c11 threads e win32 threads) quello più semplice da utilizzare e che garantisce più compatibilità è la libreria standard per i thread di C11. Anche questa però non è implementata in tutti i compilatori in quanto è una funzionalità standard opzionale.
 
-I restanti sono invece adatti quando sappiamo di dover lavorare su un sistema operativo specifico e, oltre agli esempi fatti, possono offrire più controllo sulla gestione e sincronizzazione dei thread.
+I restanti sono invece adatti quando sappiamo di dover lavorare su un sistema operativo specifico e, possono offrire più controllo sulla gestione e sincronizzazione dei thread.
